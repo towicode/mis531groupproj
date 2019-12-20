@@ -1,0 +1,963 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A layout example that shows off a responsive email layout.">    <title>EDIT PAGE
+</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.1/pure-min.css" integrity="sha384-" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <style>
+
+    table.blueTable {
+  border: 1px solid #1C6EA4;
+  background-color: #EEEEEE;
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+}
+table.blueTable td, table.blueTable th {
+  border: 1px solid #AAAAAA;
+  padding: 3px 2px;
+}
+table.blueTable tbody td {
+  font-size: 13px;
+}
+table.blueTable tr:nth-child(even) {
+  background: #D0E4F5;
+}
+table.blueTable thead {
+  background: #1C6EA4;
+  background: -moz-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+  background: -webkit-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+  background: linear-gradient(to bottom, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
+  border-bottom: 2px solid #444444;
+}
+table.blueTable thead th {
+  font-size: 15px;
+  font-weight: bold;
+  color: #FFFFFF;
+  border-left: 2px solid #D0E4F5;
+}
+table.blueTable thead th:first-child {
+  border-left: none;
+}
+
+table.blueTable tfoot {
+  font-size: 14px;
+  font-weight: bold;
+  color: #FFFFFF;
+  background: #D0E4F5;
+  background: -moz-linear-gradient(top, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+  background: -webkit-linear-gradient(top, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+  background: linear-gradient(to bottom, #dcebf7 0%, #d4e6f6 66%, #D0E4F5 100%);
+  border-top: 2px solid #444444;
+}
+table.blueTable tfoot td {
+  font-size: 14px;
+}
+table.blueTable tfoot .links {
+  text-align: right;
+}
+table.blueTable tfoot .links a{
+  display: inline-block;
+  background: #1C6EA4;
+  color: #FFFFFF;
+  padding: 2px 8px;
+  border-radius: 5px;
+}
+
+    <!--.loader {-->
+  <!--border: 16px solid #f3f3f3; /* Light grey */-->
+  <!--border-top: 16px solid #3498db; /* Blue */-->
+  <!--border-radius: 50%;-->
+  <!--width: 120px;-->
+  <!--height: px;-->
+  <!--animation: spin 2s linear infinite;-->
+  <!--visibility: hidden;-->
+<!--}-->
+
+<!--@keyframes spin {-->
+  <!--0% { transform: rotate(0deg); }-->
+  <!--100% { transform: rotate(360deg); }-->
+<!--}-->
+        /*
+ * -- BASE STYLES --
+ * Most of these are inherited from Base, but I want to change a few.
+ */
+body {
+    color: #333;
+}
+
+
+
+a {
+    text-decoration: none;
+    color: #1b98f8;
+}
+
+
+/*
+ * -- HELPER STYLES --
+ * Over-riding some of the .pure-button styles to make my buttons look unique
+ */
+.primary-button,
+.secondary-button {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    border-radius: 20px;
+}
+.primary-button {
+    color: #fff;
+    background: #1b98f8;
+    margin: 1em 0;
+}
+.secondary-button {
+    background: #fff;
+    border: 1px solid #ddd;
+    color: #666;
+    padding: 0.5em 2em;
+    font-size: 80%;
+}
+
+/*
+ * -- LAYOUT STYLES --
+ * This layout consists of three main elements, `#nav` (navigation bar), `#list` (email list), and `#main` (email content). All 3 elements are within `#layout`
+ */
+#layout, #nav, #list, #main {
+    margin: 0;
+    padding: 0;
+}
+
+/* Make the navigation 100% width on phones */
+#nav {
+    width: 100%;
+    height: 40px;
+    position: relative;
+    background: rgb(37, 42, 58);
+    text-align: center;
+}
+/* Show the "Menu" button on phones */
+#nav .nav-menu-button {
+    display: block;
+    top: 0.5em;
+    right: 0.5em;
+    position: absolute;
+}
+
+/* When "Menu" is clicked, the navbar should be 80% height */
+#nav.active {
+    height: 80%;
+}
+/* Don't show the navigation items... */
+.nav-inner {
+    display: none;
+}
+
+/* ...until the "Menu" button is clicked */
+#nav.active .nav-inner {
+    display: block;
+    padding: 2em 0;
+}
+
+
+/*
+ * -- NAV BAR STYLES --
+ * Styling the default .pure-menu to look a little more unique.
+ */
+#nav .pure-menu {
+    background: transparent;
+    border: none;
+    text-align: left;
+}
+    #nav .pure-menu-link:hover,
+    #nav .pure-menu-link:focus {
+        background: rgb(55, 60, 90);
+    }
+    #nav .pure-menu-link {
+        color: #fff;
+        margin-left: 0.5em;
+    }
+    #nav .pure-menu-heading {
+        border-bottom: none;
+        font-size:110%;
+        color: rgb(75, 113, 151);
+    }
+
+
+/*
+ * -- EMAIL STYLES --
+ * Styles relevant to the email messages, labels, counts, and more.
+ */
+.email-count {
+    color: rgb(75, 113, 151);
+}
+
+.email-label-personal,
+.email-label-work,
+.email-label-travel {
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    margin-right: 0.5em;
+    border-radius: 3px;
+}
+.email-label-personal {
+    background: #ffc94c;
+}
+.email-label-work {
+    background: #41ccb4;
+}
+.email-label-travel {
+    background: #40c365;
+}
+
+
+/* Email Item Styles */
+.email-item {
+    padding: 0.9em 1em;
+    border-bottom: 1px solid #ddd;
+    border-left: 6px solid transparent;
+}
+    .email-avatar {
+        border-radius: 3px;
+        margin-right: 0.5em;
+    }
+    .email-name,
+    .email-subject {
+        margin: 0;
+    }
+    .email-name {
+        text-transform: uppercase;
+        color: #999;
+    }
+    .email-desc {
+        font-size: 80%;
+        margin: 0.4em 0;
+    }
+
+.email-item-selected {
+    background: #eee;
+}
+.email-item-unread {
+    border-left: 6px solid #1b98f8;
+}
+
+/* Email Content Styles */
+.email-content-header, .email-content-body, .email-content-footer {
+    padding: 1em 2em;
+}
+    .email-content-header {
+        border-bottom: 1px solid #ddd;
+    }
+
+        .email-content-title {
+            margin: 0.5em 0 0;
+        }
+        .email-content-subtitle {
+            font-size: 1em;
+            margin: 0;
+            font-weight: normal;
+        }
+            .email-content-subtitle span {
+                color: #999;
+            }
+    .email-content-controls {
+        margin-top: 2em;
+        text-align: right;
+    }
+        .email-content-controls .secondary-button {
+            margin-bottom: 0.3em;
+        }
+
+    .email-avatar {
+        width: 40px;
+        height: 40px;
+    }
+
+
+/*
+ * -- TABLET (AND UP) MEDIA QUERIES --
+ * On tablets and other medium-sized devices, we want to customize some
+ * of the mobile styles.
+ */
+@media (min-width: 40em) {
+
+    /* Move the layout over so we can fit the nav + list in on the left */
+    #layout {
+        padding-left:500px; /* "left col (nav + list)" width */
+        position: relative;
+    }
+
+    /* These are position:fixed; elements that will be in the left 500px of the screen */
+    #nav, #list {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        overflow: auto;
+    }
+    #nav {
+        margin-left:-500px; /* "left col (nav + list)" width */
+        width: 50px;
+        height: 100%;
+    }
+
+    /* Show the menu items on the larger screen */
+    .nav-inner {
+        display: block;
+        padding: 2em 0;
+    }
+
+    /* Hide the "Menu" button on larger screens */
+    #nav .nav-menu-button {
+        display: none;
+    }
+
+    #list {
+        margin-left: -450px;
+        width: 100%;
+        height: 33%;
+        border-bottom: 1px solid #ddd;
+    }
+
+    #main {
+        position: fixed;
+        top: 33%;
+        right: 0;
+        bottom: 0;
+        left: 150px;
+        overflow: auto;
+        width: auto; /* so that it's not 100% */
+    }
+
+}
+
+/*
+ * -- DESKTOP (AND UP) MEDIA QUERIES --
+ * On desktops and other large-sized devices, we want to customize some
+ * of the mobile styles.
+ */
+@media (min-width: 60em) {
+
+    /* This will take up the entire height, and be a little thinner */
+    #list {
+        margin-left: -450px;
+        width:350px;
+        height: 100%;
+        border-right: 1px solid #ddd;
+    }
+
+    /* This will now take up it's own column, so don't need position: fixed; */
+    #main {
+        position: static;
+        margin: 0;
+        padding: 0;
+    }
+}
+
+
+    </style>
+</head>
+<body>
+
+<div id="layout" class="content pure-g">
+    <div id="nav" class="pure-u">
+        <a href="#" class="nav-menu-button">Menu</a>
+
+    </div>
+
+    <div id="list" class="pure-u-1">
+
+
+
+
+        <a href="#1">
+            <div class="email-item pure-g">
+                <div class="pure-u">
+                </div>
+
+                <div class="pure-u-3-4">
+                    <h5 class="email-name">Table #1</h5>
+                    <h4 class="email-subject">Brach</h4>
+                    <p class="email-desc">
+                        Our branches
+                    </p>
+                </div>
+            </div>
+        </a>
+        <a href="#2">
+            <div class="email-item pure-g">
+                <div class="pure-u">
+                </div>
+
+                <div class="pure-u-3-4">
+                    <h5 class="email-name">Table #2</h5>
+                    <h4 class="email-subject">Clients</h4>
+                    <p class="email-desc">
+                        Information about our clients
+                    </p>
+                </div>
+            </div>
+        </a>
+        <a href="#3">
+            <div class="email-item pure-g">
+                <div class="pure-u">
+                </div>
+
+                <div class="pure-u-3-4">
+                    <h5 class="email-name">Table #3</h5>
+                    <h4 class="email-subject">Brand</h4>
+                    <p class="email-desc">
+                        Information about our many brands
+                    </p>
+                </div>
+            </div>
+        </a>
+        <a href="#4">
+            <div class="email-item pure-g">
+                <div class="pure-u">
+                </div>
+
+                <div class="pure-u-3-4">
+                    <h5 class="email-name">Table #4</h5>
+                    <h4 class="email-subject">Region</h4>
+                    <p class="email-desc">
+                        We operate in regions across the entire USA
+                    </p>
+                </div>
+            </div>
+        </a>
+        <a href="#5">
+            <div class="email-item pure-g">
+                <div class="pure-u">
+                </div>
+
+                <div class="pure-u-3-4">
+                    <h5 class="email-name">Table #5</h5>
+                    <h4 class="email-subject">Course</h4>
+                    <p class="email-desc">
+                        Our employees always take the latest training courses
+                    </p>
+                </div>
+            </div>
+        </a>
+
+        <a href="/">
+            <div class="email-item pure-g">
+                <div class="pure-u">
+                </div>
+
+                <div class="pure-u-3-4">
+                    <h4 class="email-subject">!!! GOTO Queries !!!</h4>
+                </div>
+            </div>
+        </a>
+
+
+
+    </div>
+
+    <div id="main" class="pure-u-1">
+        <div class="email-content">
+
+
+            <div class="email-content-body">
+                <a name="1"><h1> Branch </h1></a>
+                <button onclick="view(1)">view/update</button>
+                <h2> Values </h2>
+                <table class="blueTable" id="t1"></table>
+                <h2> Insert </h2>
+                <table class="blueTable" id="i1">
+                    <th>
+                        Branch Name
+                    </th>
+                    <tr>
+                        <td>
+                            <input id="branch1">
+                        </td>
+                        <td>
+                            <button onclick="createBranch()">Submit</button>
+                        </td>
+                    </tr>
+                </table>
+                <a name="2"><h1> Clients </h1></a>
+                <button onclick="view(2)">view/update</button>
+                <h2> Values </h2>
+                <table class="blueTable" id="t2"></table>
+                <h2> Insert </h2>
+                <table class="blueTable" id="i2">
+                    <th>
+                        ORG NAME
+                    </th>
+                    <th>
+                        PHONE
+                    </th>
+                    <th>
+                        TITLE
+                    </th>
+                    <th>
+                        EMAIL
+                    </th>
+                    <th>
+                        NAME
+                    </th>
+                    <th></th>
+                    <tr>
+                        <td>
+                            <input id="clients1">
+                        </td>
+                        <td>
+                            <input id="clients2">
+                        </td>
+                        <td>
+                            <input id="clients3">
+                        </td>
+                        <td>
+                            <input id="clients4">
+                        </td>
+                        <td>
+                            <input id="clients5">
+                        </td>
+                        <td>
+                            <button onclick="createClients()">Submit</button>
+                        </td>
+                    </tr>
+                </table>
+                <a name="3"><h1> Brand </h1></a>
+                <button onclick="view(3)">view/update</button>
+                <h2> Values </h2>
+                <table class="blueTable" id="t3"></table>
+                <h2> Insert </h2>
+                <table class="blueTable" id="i3">
+                    <th>
+                        NAME
+                    </th>
+                    <th>
+                        MANAGED_BY_EMP_ID
+                    </th>
+                    <Th>
+
+                    </Th>
+                    <tr>
+                        <td>
+                            <input id="brand1">
+                        </td>
+                        <td>
+                            <input id="brand2">
+                        </td>
+                        <td>
+                            <button onclick="createBrand()">Submit</button>
+                        </td>
+                    </tr>
+                </table>
+                <a name="4"><h1> Region </h1></a>
+                <button onclick="view(4)">view/update</button>
+                <h2> Values </h2>
+                <table class="blueTable" id="t4"></table>
+                <h2> Insert </h2>
+                <table class="blueTable" id="i4">
+                    <th>
+                        Region Name
+                    </th>
+                    <th>
+
+                    </th>
+                    <tr>
+                        <td>
+                            <input id="region1">
+                        </td>
+                        <td>
+                            <button onclick="createRegion()">Submit</button>
+                        </td>
+                    </tr>
+                </table>
+                <a name="5"><h1> Course </h1></a>
+                <button onclick="view(5)">view/update</button>
+                <h2> Values </h2>
+                <table class="blueTable" id="t5"></table>
+                <h2> Insert </h2>
+                <table class="blueTable" id="i5">
+                    <th>
+                        COURSE NAME
+                    </th>
+                    <th>
+                        COURSE DESCRIPTION
+                    </th>
+                    <th>
+                        INTERNAL COST
+                    </th>
+                    <th>
+
+                    </th>
+                    <tr>
+                        <td>
+                            <input id="course1">
+                        </td>
+                        <td>
+                            <input id="course2">
+                        </td>
+                        <td>
+                            <input id="course3">
+                        </td>
+                        <td>
+                            <button onclick="createCourse()">Submit</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+var view = function(a) {
+
+    var name = ""
+    var key = ""
+    switch (a) {
+        case 1:
+            name = "branch";
+            break;
+        case 2:
+            name = "clients";
+            break;
+        case 3:
+            name = "brand";
+            break;
+        case 4:
+            name = "region";
+            break;
+        case 5:
+            name = "course";
+            break;
+    }
+
+    var my_html = ""
+
+    fetch("/" + name)
+        .then(response => response.json().then(function(text) {
+            console.log(text);
+            for (var i = 0; i < text.length; i++) {
+                var row = text[i];
+                my_html += "<tr>"
+                const values = Object.entries(row)
+                for (var j = 0; j < values.length; j++) {
+                    var myval = values[j][1];
+                    var mykey = values[j][0];
+                    if (mykey.includes("KEY9988_")) {
+                        mykey = mykey.replace("KEY9988_", "");
+                        my_html += "<td title=" + mykey + " contenteditable='false'>" + myval + "</td>"
+                    }
+                }
+                for (var j = 0; j < values.length; j++) {
+                    var myval = values[j][1];
+                    var mykey = values[j][0];
+                    if (!mykey.includes("KEY9988_")) {
+                        my_html += "<td title=" + mykey + " contenteditable='true'>" + myval + "</td>"
+                    }
+                }
+                my_html += "<td> <button onclick='edit(" + a + ",this)'> Edit </button></td>"
+                my_html += "<td> <button onclick='del(" + a + ",this)'> Delete </button></td>"
+                my_html += "</tr>"
+            }
+
+            document.getElementById("t" + a).innerHTML = my_html;
+
+        }));
+};
+
+var del = async function(a, b) {
+    switch (a) {
+        case 1:
+            name = "branch";
+            break;
+        case 2:
+            name = "clients";
+            break;
+        case 3:
+            name = "brand";
+            break;
+        case 4:
+            name = "region";
+            break;
+        case 5:
+            name = "course";
+            break;
+    }
+
+    var res = {}
+    var nodes = b.parentElement.parentElement.childNodes;
+    for (var i = 0; i < nodes.length - 2; i++) {
+        var t_node = nodes[i];
+        res[t_node.title] = t_node.innerText
+    };
+
+    const url = '/' + name;
+
+    try {
+        const response = await fetch(url, {
+            method: 'DELETE', // or 'PUT'
+            body: JSON.stringify(res), // data can be `string` or {object}!
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        const json = await response.json();
+        console.log('Success:', JSON.stringify(json));
+        document.getElementById("t" + a).innerHTML = "";
+        view(a);
+    } catch (error) {
+        Toastify({
+            text: "There was an error with your request. It could be that a field is being referenced somewhere else" +
+                " in the database, or perhaps you entered some bad input for one of the" +
+                " fields. You could also try refreshing this page and trying again.",
+            duration: 20000,
+            close: true,
+            gravity: "top", // `top` or `bottom`
+            position: 'center', // `left`, `center` or `right`
+            backgroundColor: "red",
+            stopOnFocus: true, // Prevents dismissing of toast on hover
+            onClick: function() {} // Callback after click
+        }).showToast();
+    }
+};
+
+
+var edit = async function(a, b) {
+    switch (a) {
+        case 1:
+            name = "branch";
+            break;
+        case 2:
+            name = "clients";
+            break;
+        case 3:
+            name = "brand";
+            break;
+        case 4:
+            name = "region";
+            break;
+        case 5:
+            name = "course";
+            break;
+    }
+
+    var res = {}
+    var nodes = b.parentElement.parentElement.childNodes;
+    for (var i = 0; i < nodes.length - 2; i++) {
+        var t_node = nodes[i];
+        res[t_node.title] = t_node.innerText
+    };
+
+    const url = '/' + name;
+
+    try {
+        const response = await fetch(url, {
+            method: 'PUT', // or 'PUT'
+            body: JSON.stringify(res), // data can be `string` or {object}!
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        const json = await response.json();
+        console.log('Success:', JSON.stringify(json));
+        document.getElementById("t" + a).innerHTML = "";
+        view(a);
+
+    } catch (error) {
+        Toastify({
+            text: "There was an error with your request. It could be that a field is being referenced somewhere else" +
+                " in the database, or perhaps you entered some bad input for one of the" +
+                " fields",
+            duration: 20000,
+            close: true,
+            gravity: "top", // `top` or `bottom`
+            position: 'center', // `left`, `center` or `right`
+            backgroundColor: "red",
+            stopOnFocus: true, // Prevents dismissing of toast on hover
+            onClick: function() {} // Callback after click
+        }).showToast();
+    }
+    }
+
+    var createBranch  =  async function(){
+        var res = { 'NAME' : document.getElementById("branch1").value }
+        try {
+            const response = await fetch("/branch", {
+                method: 'POST',
+                body: JSON.stringify(res), // data can be `string` or {object}!
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            const json = await response.json();
+            console.log('Success:', JSON.stringify(json));
+            document.getElementById("t" + 1).innerHTML = "";
+            view(1);
+
+        } catch (error) {
+            Toastify({
+                text: "There was an error with your request. It could be that a field is being referenced somewhere else" +
+                    " in the database, or perhaps you entered some bad input for one of the" +
+                    " fields",
+                duration: 20000,
+                close: true,
+                gravity: "top", // `top` or `bottom`
+                position: 'center', // `left`, `center` or `right`
+                backgroundColor: "red",
+                stopOnFocus: true, // Prevents dismissing of toast on hover
+                onClick: function() {} // Callback after click
+            }).showToast();
+        }
+    }
+
+    var createClients  =  async function(){
+        var res = {
+        'ORG_NAME' : document.getElementById("clients1").value,
+        'PHONE' : document.getElementById("clients2").value,
+        'TITLE' : document.getElementById("clients3").value,
+        'EMAIL' : document.getElementById("clients4").value,
+        'NAME' : document.getElementById("clients5").value,
+
+        }
+        try {
+            const response = await fetch("/clients", {
+                method: 'POST',
+                body: JSON.stringify(res), // data can be `string` or {object}!
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            const json = await response.json();
+            console.log('Success:', JSON.stringify(json));
+            document.getElementById("t" + 2).innerHTML = "";
+            view(2);
+
+        } catch (error) {
+            Toastify({
+                text: "There was an error with your request. It could be that a field is being referenced somewhere else" +
+                    " in the database, or perhaps you entered some bad input for one of the" +
+                    " fields",
+                duration: 20000,
+                close: true,
+                gravity: "top", // `top` or `bottom`
+                position: 'center', // `left`, `center` or `right`
+                backgroundColor: "red",
+                stopOnFocus: true, // Prevents dismissing of toast on hover
+                onClick: function() {} // Callback after click
+            }).showToast();
+        }
+    }
+
+    var createBrand  =  async function(){
+        var res = {
+        'NAME' : document.getElementById("brand1").value,
+        'MANAGED_BY_EMP_ID' : document.getElementById("brand2").value,
+        }
+        try {
+            const response = await fetch("/brand", {
+                method: 'POST',
+                body: JSON.stringify(res), // data can be `string` or {object}!
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            const json = await response.json();
+            console.log('Success:', JSON.stringify(json));
+            document.getElementById("t" + 3).innerHTML = "";
+            view(3);
+
+        } catch (error) {
+            Toastify({
+                text: "There was an error with your request. It could be that a field is being referenced somewhere else" +
+                    " in the database, or perhaps you entered some bad input for one of the" +
+                    " fields",
+                duration: 20000,
+                close: true,
+                gravity: "top", // `top` or `bottom`
+                position: 'center', // `left`, `center` or `right`
+                backgroundColor: "red",
+                stopOnFocus: true, // Prevents dismissing of toast on hover
+                onClick: function() {} // Callback after click
+            }).showToast();
+        }
+    }
+
+    var createRegion  =  async function(){
+        var res = {
+        'NAME' : document.getElementById("region1").value,
+        }
+        try {
+            const response = await fetch("/region", {
+                method: 'POST',
+                body: JSON.stringify(res), // data can be `string` or {object}!
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            const json = await response.json();
+            console.log('Success:', JSON.stringify(json));
+            document.getElementById("t" + 4).innerHTML = "";
+            view(4);
+
+        } catch (error) {
+            Toastify({
+                text: "There was an error with your request. It could be that a field is being referenced somewhere else" +
+                    " in the database, or perhaps you entered some bad input for one of the" +
+                    " fields",
+                duration: 20000,
+                close: true,
+                gravity: "top", // `top` or `bottom`
+                position: 'center', // `left`, `center` or `right`
+                backgroundColor: "red",
+                stopOnFocus: true, // Prevents dismissing of toast on hover
+                onClick: function() {} // Callback after click
+            }).showToast();
+        }
+    }
+
+    var createCourse  =  async function(){
+        var res = {
+        'COURSE_NAME' : document.getElementById("course1").value,
+        'COURSE_DESC' : document.getElementById("course2").value,
+        'INTERNAL_COST' : document.getElementById("course3").value,
+        }
+        try {
+            const response = await fetch("/course", {
+                method: 'POST',
+                body: JSON.stringify(res), // data can be `string` or {object}!
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            const json = await response.json();
+            console.log('Success:', JSON.stringify(json));
+            document.getElementById("t" + 5).innerHTML = "";
+            view(5);
+
+        } catch (error) {
+            Toastify({
+                text: "There was an error with your request. It could be that a field is being referenced somewhere else" +
+                    " in the database, or perhaps you entered some bad input for one of the" +
+                    " fields",
+                duration: 20000,
+                close: true,
+                gravity: "top", // `top` or `bottom`
+                position: 'center', // `left`, `center` or `right`
+                backgroundColor: "red",
+                stopOnFocus: true, // Prevents dismissing of toast on hover
+                onClick: function() {} // Callback after click
+            }).showToast();
+        }
+    }
+
+
+</script>
+
+
+
+</body>
+</html>
